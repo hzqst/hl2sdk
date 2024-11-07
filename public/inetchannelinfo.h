@@ -65,15 +65,15 @@ public:
 	virtual bool		IsTimingOut( void ) const = 0;	// true if timing out
 	virtual bool		IsPlayback( void ) const = 0;
 
-	virtual float		GetAvgLatency( void ) const = 0;	// average packet latency in seconds
-	virtual float		GetEngineLatency( void ) const = 0;	// current latency (RTT), more accurate but jittering
+	virtual double		GetAvgLatency( void ) const = 0;	// average packet latency in seconds
+	virtual double		GetEngineLatency( void ) const = 0;	// current latency (RTT), more accurate but jittering
 	
 	virtual float		GetAvgLoss( int flow ) const = 0;	 // avg packet loss[0..1]
 	virtual float		GetAvgChoke(int flow) const = 0;
 	virtual float		GetAvgData( int flow ) const = 0;	 // data flow in bytes/sec
 	
-	virtual float		unk001( int flow ) const = 0;
-	
+	virtual float		GetAvgPacketBytes( int flow ) const = 0; //avg packet bytes/sec // flow=0: m_flOutBytesPerSec //flow=0: m_flInBytesPerSec
+
 	virtual float		GetAvgPackets( int flow ) const = 0; // avg packets/sec
 	virtual int			GetTotalData( int flow ) const = 0;	 // total flow in/out in bytes
 	virtual int			GetTotalPackets( int flow ) const = 0;
