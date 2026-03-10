@@ -31,7 +31,7 @@ public:
 	
 	// Gets at particular parameters
 	virtual int			ParmCount() const = 0;
-	virtual int			FindParm( CUtlStringToken param ) const = 0;	// Returns 0 if not found.
+	virtual int			FindParm( CUtlStringToken param, int startIdx = -1 ) const = 0;	// Returns 0 if not found.
 	virtual const char* GetParm( int nIndex ) const = 0;
 
 	// Returns the argument after the one specified, or the default if not found
@@ -42,12 +42,27 @@ public:
 
 	virtual const char **GetParms() const = 0;
 	virtual const char *GetCmdLine( void ) const = 0;
-	virtual void		AppendParm( CUtlStringToken param, const char *pszValues ) = 0;
+	virtual void		AppendParm( const char* param, const char *pszValues ) = 0;
 	
 	// Returns true if there's atleast one parm available
 	virtual bool		HasParms( void ) const = 0;
 
-	virtual const char *GetUnkString() = 0;
+	virtual const char *GetParmBuffer() = 0;
+
+	// Unrestricted access to command line parms, alternative methods above won't return anything if
+	// they are executed in a secure environment (i.e. wasn't launched with -tools, -dedicated or -insecure)
+	virtual	const char *CheckParmUnrestricted( CUtlStringToken param, const char **ppszValue = 0 ) const = 0;
+	virtual bool		HasParmUnrestricted( CUtlStringToken param ) const = 0;
+
+	virtual int			FindParmUnrestricted( CUtlStringToken param, int startIdx = -1 ) const = 0;	// Returns 0 if not found.
+
+	// Returns the argument after the one specified, or the default if not found
+	virtual const char *ParmValueUnrestricted( CUtlStringToken param, const char *pDefaultVal = 0 ) const = 0;
+	virtual int			ParmValueUnrestricted( CUtlStringToken param, int nDefaultVal ) const = 0;
+	virtual float		ParmValueUnrestricted( CUtlStringToken param, float flDefaultVal ) const = 0;
+	virtual bool		ParmValueUnrestricted( CUtlStringToken param, const char *pDefaultVal, CBufferString *bufOut ) = 0;
+
+	virtual				~ICommandLine() = 0;
 };
 
 //-----------------------------------------------------------------------------

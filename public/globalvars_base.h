@@ -11,6 +11,8 @@
 #pragma once
 #endif
 
+#include "threadtools.h"
+
 enum GlobalVarsUsageWarning_t
 {
 	GV_RENDERTIME_CALLED_DURING_SIMULATION,
@@ -86,6 +88,11 @@ public:
 	
 	// Non-zero when during movement processing, it's the part after the decimal point of the "when" field in player's subtick moves.
 	float m_flSubtickFraction;
+
+	// Simulation tick interval
+	float m_flIntervalPerTick;
+
+	ThreadId_t m_nThreadId;
 };
 
 inline CGlobalVarsBase::CGlobalVarsBase()
